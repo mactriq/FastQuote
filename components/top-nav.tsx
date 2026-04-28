@@ -17,7 +17,7 @@ export function TopNav() {
       <div className="mx-auto max-w-5xl px-4 md:px-6">
         <div className="flex h-14 items-center justify-between">
           <div className="font-mono text-[15px] font-medium tracking-wide text-foreground">
-            ARIHANT <span className="text-primary">STEEL</span> AGENCY
+            SURYA <span className="text-primary">PROFILE</span> INDUSTRIES
           </div>
           <nav className="flex items-center gap-1">
             {navItems.map(item => (

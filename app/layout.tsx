@@ -3,19 +3,19 @@ import { IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const ibmPlexSans = IBM_Plex_Sans({ 
+const ibmPlexSans = IBM_Plex_Sans({
   subsets: ["latin"],
   weight: ['400', '500', '600'],
   variable: '--font-sans'
 })
-const ibmPlexMono = IBM_Plex_Mono({ 
+const ibmPlexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ['400', '500'],
   variable: '--font-mono'
 })
 
 export const metadata: Metadata = {
-  title: 'Arihant Steel Agency - Quotation Tool',
+  title: 'Surya Profile Industries - Quotation Tool',
   description: 'Production-grade steel pipe quotation and pricing tool for daily operations',
 }
 

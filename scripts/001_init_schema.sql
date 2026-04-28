@@ -1,4 +1,4 @@
--- Arihant Steel Agency Database Schema
+-- Surya Profile Industries Database Schema
 -- Migration 001: Initial schema setup
 
 -- Users table for authentication

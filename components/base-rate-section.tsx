@@ -28,7 +28,7 @@ export function BaseRateSection({ settings, onUpdate }: BaseRateSectionProps) {
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         <div className="space-y-1.5">
           <Label htmlFor="baseRate" className="text-xs uppercase tracking-wider text-muted-foreground">
-            Base Rate (per MT) — Arihant&apos;s daily rate
+            Base Rate (per MT) — Surya&apos;s daily rate
           </Label>
           <div className="relative">
             <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 font-mono text-sm text-muted-foreground">

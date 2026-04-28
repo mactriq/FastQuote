@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { Item, ITEMS } from '@/lib/items'
 
-const STORAGE_KEY = 'arihant-items-custom'
+const STORAGE_KEY = 'surya-items-custom'
 
 export interface CustomItem extends Item {
   id: string
@@ -21,7 +21,7 @@ function mergeItems(customItems: CustomItem[]): CustomItem[] {
     id: `default-${index}`,
     isCustom: false,
   }))
-  
+
   // Create a map for quick lookup of custom overrides
   const customMap = new Map<string, CustomItem>()
   customItems.forEach(item => {
@@ -33,7 +33,7 @@ function mergeItems(customItems: CustomItem[]): CustomItem[] {
       customMap.set(key, item)
     }
   })
-  
+
   // Apply overrides to default items
   const merged = defaultItems.map(item => {
     const key = `${item.type}-${item.size}-${item.thick}`
@@ -43,14 +43,14 @@ function mergeItems(customItems: CustomItem[]): CustomItem[] {
     }
     return item
   })
-  
+
   // Add purely custom items
   customItems.forEach(item => {
     if (item.isCustom) {
       merged.push(item)
     }
   })
-  
+
   return merged
 }
 
@@ -97,7 +97,7 @@ export function useItemsStore() {
       if (defaultItem) {
         setCustomItems(prev => {
           const key = `${defaultItem.type}-${defaultItem.size}-${defaultItem.thick}`
-          const existingIndex = prev.findIndex(i => 
+          const existingIndex = prev.findIndex(i =>
             !i.isCustom && `${i.type}-${i.size}-${i.thick}` === key
           )
           const updatedItem = { ...defaultItem, ...updates, isCustom: false }
@@ -146,11 +146,11 @@ export function useItemsStore() {
       if (!Array.isArray(parsed)) {
         throw new Error('Invalid format: expected array')
       }
-      
+
       // Validate and transform imported items
       const validItems: CustomItem[] = parsed.map((item: Item, index: number) => {
-        if (!item.type || !item.size || !item.thick || 
-            typeof item.wtpc !== 'number' || typeof item.diff !== 'number') {
+        if (!item.type || !item.size || !item.thick ||
+          typeof item.wtpc !== 'number' || typeof item.diff !== 'number') {
           throw new Error(`Invalid item at index ${index}`)
         }
         return {
@@ -159,7 +159,7 @@ export function useItemsStore() {
           isCustom: true,
         }
       })
-      
+
       setCustomItems(validItems.filter(i => i.isCustom))
       return { success: true, count: validItems.length }
     } catch (e) {

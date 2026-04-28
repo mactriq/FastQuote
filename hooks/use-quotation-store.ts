@@ -5,7 +5,7 @@ import type { Item } from '@/lib/items'
 import type { Settings, QuoteLine } from '@/lib/pricing'
 import { generateId } from '@/lib/pricing'
 
-const STORAGE_KEY = 'arihant-quotation-v1'
+const STORAGE_KEY = 'surya-quotation-v1'
 
 interface StoredData {
   settings: Settings
