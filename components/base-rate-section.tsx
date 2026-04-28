@@ -26,6 +26,97 @@ export function BaseRateSection({ settings, onUpdate }: BaseRateSectionProps) {
       footer={<FormulaBar />}
     >
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+
+        <div className="space-y-1.5">
+          <Label htmlFor="baseRate" className="text-xs uppercase tracking-wider text-muted-foreground">
+            Customer Name
+          </Label>
+          <div className="relative">
+            <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 font-mono text-sm text-muted-foreground">
+              ₹
+            </span>
+            <Input
+              id="customerName"
+              type="text"
+              value={settings.baseRate}
+              onChange={(e) => onUpdate({ baseRate: Number(e.target.value) || 0 })}
+              className="pl-7 font-mono text-base font-medium"
+            />
+          </div>
+        </div>
+
+        <div className="space-y-1.5">
+          <Label htmlFor="baseRate" className="text-xs uppercase tracking-wider text-muted-foreground">
+            Reference No
+          </Label>
+          <div className="relative">
+            <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 font-mono text-sm text-muted-foreground">
+              ₹
+            </span>
+            <Input
+              id="refNo"
+              type="number"
+              value={settings.baseRate}
+              onChange={(e) => onUpdate({ baseRate: Number(e.target.value) || 0 })}
+              className="pl-7 font-mono text-base font-medium"
+            />
+          </div>
+        </div>
+
+        <div className="space-y-1.5">
+          <Label htmlFor="baseRate" className="text-xs uppercase tracking-wider text-muted-foreground">
+            Enquiry Type
+          </Label>
+          <div className="relative">
+            <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 font-mono text-sm text-muted-foreground">
+              ₹
+            </span>
+            <Input
+              id="enquiryType"
+              type="number"
+              value={settings.baseRate}
+              onChange={(e) => onUpdate({ baseRate: Number(e.target.value) || 0 })}
+              className="pl-7 font-mono text-base font-medium"
+            />
+          </div>
+        </div>
+
+        <div className="space-y-1.5">
+          <Label htmlFor="baseRate" className="text-xs uppercase tracking-wider text-muted-foreground">
+            Kindly Attn
+          </Label>
+          <div className="relative">
+            <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 font-mono text-sm text-muted-foreground">
+              ₹
+            </span>
+            <Input
+              id="baseRate"
+              type="number"
+              value={settings.baseRate}
+              onChange={(e) => onUpdate({ baseRate: Number(e.target.value) || 0 })}
+              className="pl-7 font-mono text-base font-medium"
+            />
+          </div>
+        </div>
+
+        <div className="space-y-1.5">
+          <Label htmlFor="baseRate" className="text-xs uppercase tracking-wider text-muted-foreground">
+            Reference Name
+          </Label>
+          <div className="relative">
+            <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 font-mono text-sm text-muted-foreground">
+              ₹
+            </span>
+            <Input
+              id="referenceName"
+              type="number"
+              value={settings.baseRate}
+              onChange={(e) => onUpdate({ baseRate: Number(e.target.value) || 0 })}
+              className="pl-7 font-mono text-base font-medium"
+            />
+          </div>
+        </div>
+
         <div className="space-y-1.5">
           <Label htmlFor="baseRate" className="text-xs uppercase tracking-wider text-muted-foreground">
             Base Rate (per MT) — Surya&apos;s daily rate
