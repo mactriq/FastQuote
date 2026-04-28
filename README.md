@@ -1,3 +1,0 @@
-# FastQuote
-
-the app
