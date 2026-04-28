@@ -1,4 +1,3 @@
-import { TopNav } from "./top-nav";
 
 export function Header() {
   return (
@@ -10,7 +9,6 @@ export function Header() {
         <div className="hidden font-mono text-xs text-muted-foreground sm:block">
           Quotation Tool — Godown
         </div>
-        <TopNav />
       </div>
     </header>
   )
