@@ -25,27 +25,87 @@ export function BaseRateSection({ settings, onUpdate }: BaseRateSectionProps) {
       subtitle="Set once — all prices update automatically"
       footer={<FormulaBar />}
     >
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
 
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         <div className="space-y-1.5">
-          <Label htmlFor="baseRate" className="text-xs uppercase tracking-wider text-muted-foreground">
+          <Label htmlFor="customerName" className="text-xs uppercase tracking-wider text-muted-foreground">
             Customer Name
           </Label>
           <div className="relative">
-            <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 font-mono text-sm text-muted-foreground">
-              ₹
-            </span>
             <Input
               id="customerName"
               type="text"
-              value={settings.baseRate}
-              onChange={(e) => onUpdate({ baseRate: Number(e.target.value) || 0 })}
-              className="pl-7 font-mono text-base font-medium"
+              value={settings.customerName || ""}
+              onChange={(e) =>
+                onUpdate({
+                  customerName: e.target.value,
+                })
+              }
+              className="font-mono text-base font-medium"
             />
           </div>
         </div>
 
         <div className="space-y-1.5">
+          <Label htmlFor="gstNo" className="text-xs uppercase tracking-wider text-muted-foreground">
+            GST No
+          </Label>
+          <div className="relative">
+            <Input
+              id="gstNo"
+              type="text"
+              // value={settings.baseRate}
+              value={settings.gstNo || ""}
+              onChange={(e) =>
+                onUpdate({
+                  gstNo: e.target.value.toUpperCase(),
+                })
+              }
+              maxLength={15}
+              className="font-mono text-base font-medium uppercase"
+            />
+          </div>
+        </div>
+
+        <div className="space-y-1.5">
+          <Label htmlFor="quotationNo" className="text-xs uppercase tracking-wider text-muted-foreground">
+            Quotation No
+          </Label>
+          <div className="relative">
+            <Input
+              id="quotationNo"
+              type="text"
+              value={settings.quotationNo || ""}
+              onChange={(e) =>
+                onUpdate({
+                  quotationNo: e.target.value,
+                })
+              }
+              className="font-mono text-base font-medium"
+            />
+          </div>
+        </div>
+
+        <div className="space-y-1.5">
+          <Label htmlFor="address" className="text-xs uppercase tracking-wider text-muted-foreground">
+            Address
+          </Label>
+          <div className="relative">
+            <Input
+              id="address"
+              type="text"
+              value={settings.address || ""}
+              onChange={(e) =>
+                onUpdate({
+                  address: e.target.value,
+                })
+              }
+              className="font-mono text-base font-medium"
+            />
+          </div>
+        </div>
+
+        {/* <div className="space-y-1.5">
           <Label htmlFor="baseRate" className="text-xs uppercase tracking-wider text-muted-foreground">
             Reference No
           </Label>
@@ -61,27 +121,128 @@ export function BaseRateSection({ settings, onUpdate }: BaseRateSectionProps) {
               className="pl-7 font-mono text-base font-medium"
             />
           </div>
-        </div>
+        </div> */}
 
         <div className="space-y-1.5">
-          <Label htmlFor="baseRate" className="text-xs uppercase tracking-wider text-muted-foreground">
+          <Label htmlFor="enquiryType" className="text-xs uppercase tracking-wider text-muted-foreground">
             Enquiry Type
           </Label>
+          <select
+            id="enquiryType"
+            value={settings.enquiryType || ""}
+            onChange={(e) =>
+              onUpdate({
+                enquiryType: e.target.value,
+              })
+            }
+            className="w-full rounded-md border px-3 py-1.5 text-base font-medium font-mono focus:outline-none focus:ring-2 focus:ring-ring"
+          >
+            <option value="" className="readonly">Select Type</option>
+            <option value="email">Email</option>
+            <option value="whatsapp">WhatsApp</option>
+            <option value="call">Call</option>
+          </select>
+          {/* className="pl-7 font-mono text-base font-medium" */}
+        </div>
+      </div>
+
+      <div className="border rounded-md p-2 mt-5 mb-5">
+        <div className="space-y-1.5 flex justify-start p-2 bg-header rounded-md mb-2">
+          <Label htmlFor="kindlyAttn" className="text-xs uppercase tracking-wider text-header-foreground">
+            Kindly Attn
+          </Label>
+        </div>
+
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="space-y-1.5">
+          <Label htmlFor="kindlyName" className="text-xs uppercase tracking-wider text-muted-foreground">
+            Name
+          </Label>
           <div className="relative">
-            <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 font-mono text-sm text-muted-foreground">
-              ₹
-            </span>
             <Input
-              id="enquiryType"
-              type="number"
-              value={settings.baseRate}
-              onChange={(e) => onUpdate({ baseRate: Number(e.target.value) || 0 })}
-              className="pl-7 font-mono text-base font-medium"
+              id="kindlyName"
+              type="text"
+              value={settings.kindlyName || ""}
+              onChange={(e) =>
+                onUpdate({
+                  kindlyName: e.target.value,
+                })
+              }
+              className="font-mono text-base font-medium"
             />
           </div>
         </div>
 
         <div className="space-y-1.5">
+          <Label htmlFor="kindlyPhone" className="text-xs uppercase tracking-wider text-muted-foreground">
+            Phone
+          </Label>
+          <div className="relative">
+            <Input
+              id="kindlyPhone"
+              type="tel"
+              value={settings.kindlyPhone || ""}
+              onChange={(e) =>
+                onUpdate({
+                  kindlyPhone: e.target.value.replace(/\D/g, ""),
+                })
+              }
+              maxLength={10}
+              className="font-mono text-base font-medium"
+            />
+          </div>
+        </div>
+      </div>
+
+        <div className="space-y-1.5 flex justify-start p-2 bg-header rounded-md mt-5 mb-2">
+          <Label htmlFor="Reference" className="text-xs uppercase tracking-wider text-header-foreground">
+            Reference
+          </Label>
+        </div>
+
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="space-y-1.5">
+          <Label htmlFor="referenceName" className="text-xs uppercase tracking-wider text-muted-foreground">
+            Name
+          </Label>
+          <div className="relative">
+            <Input
+              id="referenceName"
+              type="text"
+              value={settings.referenceName || ""}
+              onChange={(e) =>
+                onUpdate({
+                  referenceName: e.target.value,
+                })
+              }
+              className="font-mono text-base font-medium"
+            />
+          </div>
+        </div>
+
+        <div className="space-y-1.5">
+          <Label htmlFor="referencePhone" className="text-xs uppercase tracking-wider text-muted-foreground">
+            Phone
+          </Label>
+          <div className="relative">
+            <Input
+              id="referencePhone"
+              type="tel"
+              value={settings.referencePhone || ""}
+              onChange={(e) =>
+                onUpdate({
+                  referencePhone: e.target.value.replace(/\D/g, ""),
+                })
+              }
+              maxLength={10}
+              className="font-mono text-base font-medium"
+            />
+          </div>
+        </div>
+      </div>
+      </div>
+
+        {/* <div className="space-y-1.5">
           <Label htmlFor="baseRate" className="text-xs uppercase tracking-wider text-muted-foreground">
             Kindly Attn
           </Label>
@@ -115,7 +276,9 @@ export function BaseRateSection({ settings, onUpdate }: BaseRateSectionProps) {
               className="pl-7 font-mono text-base font-medium"
             />
           </div>
-        </div>
+        </div> */}
+
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
 
         <div className="space-y-1.5">
           <Label htmlFor="baseRate" className="text-xs uppercase tracking-wider text-muted-foreground">

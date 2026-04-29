@@ -1,6 +1,16 @@
 import type { Item } from './items'
 
 export interface Settings {
+  enquiryType: string
+  kindlyPhone: string
+  kindlyName: string
+  referencePhone: string
+  referenceName: string
+  phone: string
+  address: string
+  quotationNo: string
+  customerName: string
+  gstNo: string
   baseRate: number
   termAdj: number
   gstPct: number
