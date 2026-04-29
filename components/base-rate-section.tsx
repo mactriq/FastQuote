@@ -123,7 +123,7 @@ export function BaseRateSection({ settings, onUpdate }: BaseRateSectionProps) {
           </div>
         </div> */}
 
-        <div className="space-y-1.5">
+        {/* <div className="space-y-1.5">
           <Label htmlFor="enquiryType" className="text-xs uppercase tracking-wider text-muted-foreground">
             Enquiry Type
           </Label>
@@ -142,7 +142,31 @@ export function BaseRateSection({ settings, onUpdate }: BaseRateSectionProps) {
             <option value="whatsapp">WhatsApp</option>
             <option value="call">Call</option>
           </select>
-          {/* className="pl-7 font-mono text-base font-medium" */}
+        </div> */}
+
+        <div className="space-y-1.5">
+          <Label htmlFor="enquiryType" className="text-xs uppercase tracking-wider text-muted-foreground">
+            Enquiry Type
+          </Label>
+
+          <Select
+            value={settings.enquiryType || ""}
+            onValueChange={(v) =>
+              onUpdate({
+                enquiryType: v,
+              })
+            }
+          >
+            <SelectTrigger id="enquiryType">
+              <SelectValue placeholder="Select Type" />
+            </SelectTrigger>
+
+            <SelectContent>
+              <SelectItem value="email">Email</SelectItem>
+              <SelectItem value="whatsapp">WhatsApp</SelectItem>
+              <SelectItem value="call">Call</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </div>
 
