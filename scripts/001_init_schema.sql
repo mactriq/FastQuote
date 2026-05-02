@@ -61,3 +61,16 @@ CREATE INDEX IF NOT EXISTS idx_custom_items_user_id ON custom_items(user_id);
 CREATE INDEX IF NOT EXISTS idx_quotations_user_id ON quotations(user_id);
 CREATE INDEX IF NOT EXISTS idx_sessions_token ON sessions(token);
 CREATE INDEX IF NOT EXISTS idx_sessions_expires_at ON sessions(expires_at);
+
+
+-- Add customer & contact fields to quotations table
+ALTER TABLE quotations
+ADD COLUMN IF NOT EXISTS customer_name TEXT,
+ADD COLUMN IF NOT EXISTS gst_no TEXT,
+ADD COLUMN IF NOT EXISTS quotation_no TEXT,
+ADD COLUMN IF NOT EXISTS address TEXT,
+ADD COLUMN IF NOT EXISTS enquiry_type TEXT,
+ADD COLUMN IF NOT EXISTS kindly_name TEXT,
+ADD COLUMN IF NOT EXISTS kindly_phone TEXT,
+ADD COLUMN IF NOT EXISTS reference_name TEXT,
+ADD COLUMN IF NOT EXISTS reference_phone TEXT;

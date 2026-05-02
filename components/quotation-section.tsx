@@ -57,6 +57,29 @@ export function QuotationSection({ settings, lines, onRemove, onClear }: Quotati
         <EmptyState />
       ) : (
         <>
+
+        <div className="mb-4 text-sm border rounded-md p-3 bg-muted/30">
+          <div className="grid grid-cols-2 gap-2">
+            <p><strong>Customer:</strong> {settings.customerName}</p>
+            <p><strong>GST:</strong> {settings.gstNo}</p>
+            <p><strong>Quotation No:</strong> {settings.quotationNo}</p>
+            <p><strong>Enquiry:</strong> {settings.enquiryType}</p>
+            <p className="col-span-2"><strong>Address:</strong> {settings.address}</p>
+          </div>
+
+          <div className="mt-3">
+            <p className="font-semibold">Kindly Attn:</p>
+            <p>Name: {settings.kindlyName}</p>
+            <p>Phone: {settings.kindlyPhone}</p>
+          </div>
+
+          <div className="mt-3">
+            <p className="font-semibold">Reference:</p>
+            <p>Name: {settings.referenceName}</p>
+            <p>Phone: {settings.referencePhone}</p>
+          </div>
+        </div>
+
           <div className="-mx-4 overflow-x-auto md:-mx-5">
             <Table>
               <TableHeader>

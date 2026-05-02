@@ -1,6 +1,11 @@
-import { neon } from '@neondatabase/serverless'
-import * as fs from 'fs'
-import * as path from 'path'
+// import { neon } from '@neondatabase/serverless'
+// import * as fs from 'fs'
+// import * as path from 'path'
+
+require('dotenv').config()
+const { neon } = require('@neondatabase/serverless')
+const fs = require('fs')
+const path = require('path')
 
 async function runMigration() {
   const databaseUrl = process.env.DATABASE_URL
@@ -17,7 +22,7 @@ async function runMigration() {
   console.log('Running migration...')
   
   try {
-    await sql(migrationSQL)
+    await sql.unsafe(migrationSQL)
     console.log('Migration completed successfully!')
   } catch (error) {
     console.error('Migration failed:', error)
