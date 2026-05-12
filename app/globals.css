@@ -117,19 +117,37 @@
   header {
     position: static !important;
   }
-  
+
   .print\:hidden {
     display: none !important;
   }
-  
+
   body {
     background: white !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
+    zoom: 0.82;
+    /* overflow: hidden; */
   }
-  
-  main > div > div:nth-child(1),
+
+  table {
+    width: 100% !important;
+    table-layout: fixed;
+  }
+
+  th,
+  td {
+    font-size: 10px !important;
+    padding: 1px !important;
+    word-break: break-word;
+  }
+
+  /* main > div > div:nth-child(1),
   main > div > div:nth-child(2) {
+    display: none;
+  } */
+
+   ::-webkit-scrollbar {
     display: none;
   }
 }

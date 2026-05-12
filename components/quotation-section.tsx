@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { Section } from './section'
 import { Button } from '@/components/ui/button'
 import {
@@ -58,30 +59,59 @@ export function QuotationSection({ settings, lines, onRemove, onClear }: Quotati
       ) : (
         <>
 
-        <div className="mb-4 text-sm border rounded-md p-3 bg-muted/30">
-          <div className="grid grid-cols-2 gap-2">
-            <p><strong>Customer:</strong> {settings.customerName}</p>
-            <p><strong>GST:</strong> {settings.gstNo}</p>
-            <p><strong>Quotation No:</strong> {settings.quotationNo}</p>
-            <p><strong>Enquiry:</strong> {settings.enquiryType}</p>
-            <p className="col-span-2"><strong>Address:</strong> {settings.address}</p>
+        <div className="mb-4 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Image
+              src="/surya_logo.png"
+              alt="Surya Profile"
+              width={70}
+              height={70}
+              className="object-contain"
+            />
+
+            <div>
+              <h2 className="text-xl font-bold uppercase">
+                Surya Profile Industries
+              </h2>
+
+              <p className="text-sm text-muted-foreground">
+                Quotation
+              </p>
+            </div>
           </div>
 
-          <div className="mt-3">
-            <p className="font-semibold">Kindly Attn:</p>
-            <p>Name: {settings.kindlyName}</p>
-            <p>Phone: {settings.kindlyPhone}</p>
-          </div>
-
-          <div className="mt-3">
-            <p className="font-semibold">Reference:</p>
-            <p>Name: {settings.referenceName}</p>
-            <p>Phone: {settings.referencePhone}</p>
+          <div className="text-right text-sm">
+            <p><strong>Date:</strong> {new Date().toLocaleDateString('en-GB').replace(/\//g, '-')}</p>
+            <p><strong>Quotation:</strong> {settings.quotationNo}</p>
           </div>
         </div>
 
-          <div className="-mx-4 overflow-x-auto md:-mx-5">
+        <div className="mb-4 text-sm border rounded-md p-2 bg-muted/30">
+          <div className="grid grid-cols-2">
+            <p><strong>Customer:</strong> {settings.customerName}</p>
+            <p><strong>GST:</strong> {settings.gstNo}</p>
+            {/* <p><strong>Quotation No:</strong> {settings.quotationNo}</p> */}
+            <p><strong>Enquiry:</strong> {settings.enquiryType}</p>
+            <p><strong>Address:</strong> {settings.address}</p>
+          </div>
+
+            <div className="mt-3">
+              <p className="font-semibold">Kindly Attn:</p>
+              <p>Name: {settings.kindlyName}</p>
+              <p>Phone: {settings.kindlyPhone}</p>
+            </div>
+
+            <div className="mt-3">
+              <p className="font-semibold">Reference:</p>
+              <p>Name: {settings.referenceName}</p>
+              <p>Phone: {settings.referencePhone}</p>
+            </div>
+
+        </div>
+
+          <div className="-mx-2 overflow-x-auto md:-mx-2 print:overflow-visible print:overflow-x-visible">
             <Table>
+            {/* <Table className="w-full table-fixed print:table-fixed"> */}
               <TableHeader>
                 <TableRow className="bg-muted/50">
                   <TableHead className="whitespace-nowrap text-[11px] uppercase tracking-wide">Item</TableHead>
@@ -103,12 +133,12 @@ export function QuotationSection({ settings, lines, onRemove, onClear }: Quotati
                   return (
                     <TableRow key={line.id} className="group">
                       <TableCell>
-                        <div className="text-[13px] font-medium">
+                        <div className="font-medium">
                           {line.item.type} Pipe — {line.item.size}
                         </div>
-                        <div className="font-mono text-[11px] text-muted-foreground">
+                        {/* <div className="font-mono text-[11px] text-muted-foreground">
                           diff: +₹{formatNumber(line.item.diff)} · MT: ₹{formatNumber(calc.effectiveMT)}
-                        </div>
+                        </div> */}
                       </TableCell>
                       <TableCell className="font-mono text-[13px]">{line.item.thick}</TableCell>
                       <TableCell className="font-mono text-[13px] font-semibold">{line.qty} pcs</TableCell>
@@ -144,7 +174,7 @@ export function QuotationSection({ settings, lines, onRemove, onClear }: Quotati
             <StatCard value={formatINRInt(summary.loading)} label="Loading (₹350/MT)" />
           </div>
 
-          <div className="mt-3 flex items-center justify-between rounded-lg bg-header p-4 text-header-foreground">
+          <div className="mt-3 flex items-center justify-between rounded-lg bg-header px-3 py-4 text-header-foreground">
             <div>
               <div className="text-[13px] text-muted-foreground">
                 {termText} · GST {settings.gstPct}% · Loading included
@@ -155,9 +185,9 @@ export function QuotationSection({ settings, lines, onRemove, onClear }: Quotati
             </div>
           </div>
 
-          <div className="mt-2.5 rounded-md bg-muted/50 px-3 py-2 font-mono text-[11px] text-muted-foreground">
+          {/* <div className="mt-2.5 rounded-md bg-muted/50 px-3 py-2 font-mono text-[11px] text-muted-foreground">
             Ex Surat Godown · Loading ₹350/MT on {summary.totalKg.toFixed(1)} kg = ₹{Math.round(summary.loading).toLocaleString('en-IN')} · GST extra as applicable · Jointless +₹500/MT extra
-          </div>
+          </div> */}
         </>
       )}
     </Section>

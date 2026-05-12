@@ -22,8 +22,9 @@ export default function QuotationTool() {
     <div className="min-h-screen">
       <TopNav />
       <Header />
-      <main className="mx-auto max-w-5xl px-4 py-7 md:px-6">
-        <div className="flex flex-col gap-5">
+      {/* <main className="mx-auto max-w-5xl px-4 py-7 md:px-6"> */}
+      <main className="w-full px-4 py-7 md:px-6 lg:px-8">
+        {/* <div className="flex flex-col gap-5">
           <BaseRateSection settings={settings} onUpdate={updateSettings} />
           <AddItemSection settings={settings} onAdd={addLine} />
           <QuotationSection
@@ -32,6 +33,39 @@ export default function QuotationTool() {
             onRemove={removeLine}
             onClear={clearLines}
           />
+        </div> */}
+        <div className="flex flex-col gap-5">
+
+          {/* Section 1 */}
+          <div className="print:hidden">
+            <BaseRateSection
+              settings={settings}
+              onUpdate={updateSettings}
+            />
+          </div>
+
+          {/* Section 2 + 3 Side by Side */}
+          <div className="grid items-stretch gap-5 print:block lg:grid-cols-[37%_62%] items-start">
+
+            {/* Left Side */}
+            <div className="print:hidden h-full">
+              <AddItemSection
+                settings={settings}
+                onAdd={addLine}
+              />
+            </div>
+
+            {/* Right Side */}
+            <div className="print:block min-w-0 overflow-hidden">
+              <QuotationSection
+                settings={settings}
+                lines={lines}
+                onRemove={removeLine}
+                onClear={clearLines}
+              />
+            </div>
+
+          </div>
         </div>
       </main>
     </div>
