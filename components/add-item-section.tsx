@@ -49,6 +49,7 @@ export function AddItemSection({
     const typeSet = new Set(allItems.map((i) => i.type))
     return Array.from(typeSet).sort()
   }, [allItems])
+  // const types = ['Round', 'RectSquare', 'SemiCoil', 'Sheet']
 
   const [items, setItems] = useState([
     {
@@ -135,12 +136,59 @@ export function AddItemSection({
             i.thick === entry.thick
         )
 
+        // const selectedItem = allItems.find((i) => {
+        //   if (entry.type === 'RectSquare') {
+        //     return (
+        //       (i.type === 'Rect' || i.type === 'Square') &&
+        //       i.size === entry.size &&
+        //       i.thick === entry.thick
+        //     )
+        //   }
+
+        //   if (entry.type === 'Round') {
+        //     return (
+        //       i.type === 'Round' &&
+        //       i.size === entry.size &&
+        //       i.thick === entry.thick
+        //     )
+        //   }
+
+        //   if (entry.type === 'SemiCoil') {
+        //     return i.type === 'SemiCoil'
+        //   }
+
+        //   if (entry.type === 'Sheet') {
+        //     return i.type === 'Sheet'
+        //   }
+
+        //   return false
+        // })
+
         const qtyNum = Number(entry.qty) || 0
 
         const sizes = entry.type
           ? [...new Set(
               allItems
                 .filter((i) => i.type === entry.type)
+                // .filter((i) => {
+                //   if (entry.type === 'RectSquare') {
+                //     return i.type === 'Rect' || i.type === 'Square'
+                //   }
+
+                //   if (entry.type === 'Round') {
+                //     return i.type === 'Round'
+                //   }
+
+                //   if (entry.type === 'SemiCoil') {
+                //     return i.type === 'SemiCoil'
+                //   }
+
+                //   if (entry.type === 'Sheet') {
+                //     return i.type === 'Sheet'
+                //   }
+
+                //   return false
+                // })
                 .map((i) => i.size)
             )]
           : []
@@ -157,6 +205,39 @@ export function AddItemSection({
                   .map((i) => i.thick)
               )]
             : []
+
+        // const thicknesses =
+        // entry.type && entry.size
+        //   ? [...new Set(
+        //       allItems
+        //         .filter((i) => {
+        //           if (entry.type === 'RectSquare') {
+        //             return (
+        //               (i.type === 'Rect' || i.type === 'Square') &&
+        //               i.size === entry.size
+        //             )
+        //           }
+
+        //           if (entry.type === 'Round') {
+        //             return (
+        //               i.type === 'Round' &&
+        //               i.size === entry.size
+        //             )
+        //           }
+
+        //           if (entry.type === 'SemiCoil') {
+        //             return i.type === 'SemiCoil'
+        //           }
+
+        //           if (entry.type === 'Sheet') {
+        //             return i.type === 'Sheet'
+        //           }
+
+        //           return false
+        //         })
+        //         .map((i) => i.thick)
+        //     )]
+        //   : []
 
         return (
           <div
@@ -200,7 +281,11 @@ export function AddItemSection({
                   <SelectContent>
                     {types.map((t) => (
                       <SelectItem key={t} value={t}>
-                        {t} pipe
+                        {t} 
+                        {/* {t === 'Round' && 'Round Pipe'}
+                        {t === 'RectSquare' && 'Rect-Square Pipe'}
+                        {t === 'SemiCoil' && 'Semi-Coil'}
+                        {t === 'Sheet' && 'Sheet'} */}
                       </SelectItem>
                     ))}
                   </SelectContent>

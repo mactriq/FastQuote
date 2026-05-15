@@ -87,34 +87,38 @@ export function QuotationSection({ settings, lines, onRemove, onClear }: Quotati
         </div>
 
         <div className="mb-4 text-sm border rounded-md p-2 bg-muted/30">
-          <div className="grid grid-cols-2">
-            <p><strong>Customer:</strong> {settings.customerName}</p>
-            <p><strong>GST:</strong> {settings.gstNo}</p>
-            {/* <p><strong>Quotation No:</strong> {settings.quotationNo}</p> */}
-            <p><strong>Enquiry:</strong> {settings.enquiryType}</p>
-            <p><strong>Address:</strong> {settings.address}</p>
+          <div className="grid grid-cols-2 gap-x-10 gap-y-3">
+            {/* LEFT SIDE */}
+            <div>
+              <p><b>Customer:</b> {settings.customerName}</p>
+              <p><b>Enquiry:</b> {settings.enquiryType}</p>
+
+              <div className="mt-2">
+                <p><b>Kindly Attn:</b></p>
+                <p>Name: {settings.kindlyName}</p>
+                <p>Phone: {settings.kindlyPhone}</p>
+              </div>
+            </div>
+            {/* RIGHT SIDE */}
+            <div>
+              <p><b>GST:</b> {settings.gstNo}</p>
+              <p><b>Address:</b> {settings.address}</p>
+
+              <div className="mt-2">
+                <p><b>Reference:</b></p>
+                <p>Name: {settings.referenceName}</p>
+                <p>Phone: {settings.referencePhone}</p>
+              </div>
+            </div>
           </div>
-
-            <div className="mt-3">
-              <p className="font-semibold">Kindly Attn:</p>
-              <p>Name: {settings.kindlyName}</p>
-              <p>Phone: {settings.kindlyPhone}</p>
-            </div>
-
-            <div className="mt-3">
-              <p className="font-semibold">Reference:</p>
-              <p>Name: {settings.referenceName}</p>
-              <p>Phone: {settings.referencePhone}</p>
-            </div>
-
         </div>
 
           <div className="-mx-2 overflow-x-auto md:-mx-2 print:overflow-visible print:overflow-x-visible">
-            <Table>
-            {/* <Table className="w-full table-fixed print:table-fixed"> */}
+            {/* <Table> */}
+            <Table className="print:table-fixed w-full">
               <TableHeader>
                 <TableRow className="bg-muted/50">
-                  <TableHead className="whitespace-nowrap text-[11px] uppercase tracking-wide">Item</TableHead>
+                  <TableHead className="whitespace-nowrap text-[11px] uppercase tracking-wide print:w-[140px]">Item</TableHead>
                   <TableHead className="whitespace-nowrap text-[11px] uppercase tracking-wide">Thick</TableHead>
                   <TableHead className="whitespace-nowrap text-[11px] uppercase tracking-wide">Qty (pcs)</TableHead>
                   <TableHead className="whitespace-nowrap text-[11px] uppercase tracking-wide">Wt/pc</TableHead>
@@ -131,8 +135,8 @@ export function QuotationSection({ settings, lines, onRemove, onClear }: Quotati
                 {lines.map((line) => {
                   const calc = calculateLine(line, settings)
                   return (
-                    <TableRow key={line.id} className="group">
-                      <TableCell>
+                    <TableRow key={line.id} className="group print:h-[28px]">
+                      <TableCell className="print:w-[140px] whitespace-normal break-words">
                         <div className="font-medium">
                           {line.item.type} Pipe — {line.item.size}
                         </div>
