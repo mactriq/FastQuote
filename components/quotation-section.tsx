@@ -125,10 +125,10 @@ export function QuotationSection({ settings, lines, onRemove, onClear }: Quotati
             <thead className="bg-gray-100">
               <tr>
                 <th className="border p-1 w-[25px] text-center">No.</th>
-                <th className="border p-1 text-left w-[90px]">Item</th>
-                <th className="border p-1">Thick</th>
-                <th className="border p-1">Qty</th>
-                <th className="border p-1">WT/PC</th>
+                <th className="border p-1 text-left w-[80px]">Item</th>
+                <th className="border p-1 w-[50px]">Thick</th>
+                <th className="border p-1 w-[40px]">Qty</th>
+                <th className="border p-1 w-[50px]">WT/PC</th>
                 <th className="border p-1">Total KG</th>
                 <th className="border p-1">MT Rate</th>
                 <th className="border p-1">Rate/PC</th>
@@ -148,21 +148,21 @@ export function QuotationSection({ settings, lines, onRemove, onClear }: Quotati
                       {index + 1}
                     </td>
 
-                    <td className="border p-1 w-[90px]">
+                    <td className="border p-1 w-[80px]">
                       {line.item.category === 'sheet'
                         ? `${line.item.type} ${line.item.height}x${line.item.width}`
                         : `${line.item.type} ${line.item.size}`}
                     </td>
 
-                    <td className="border p-1 text-center">
+                    <td className="border p-1 text-center w-[50px]">
                       {line.item.thick}
                     </td>
 
-                    <td className="border p-1 text-center">
+                    <td className="border p-1 text-center w-[40px]">
                       {line.qty}
                     </td>
 
-                    <td className="border p-1 text-center">
+                    <td className="border p-1 text-center w-[50px]">
                       {line.item.wtpc} kg
                     </td>
 
@@ -170,7 +170,7 @@ export function QuotationSection({ settings, lines, onRemove, onClear }: Quotati
                       {calc.totalKg} kg
                     </td>
 
-                    <td className="border p-1 text-center">
+                    <td className="border p-1 text-center no-wrap">
                       ₹{formatNumber(calc.effectiveMT)}/MT
                     </td>
 
