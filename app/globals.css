@@ -114,40 +114,60 @@
 
 /* Print styles */
 @media print {
-  header {
-    position: static !important;
-  }
-
-  .print\:hidden {
-    display: none !important;
-  }
-
   body {
     background: white !important;
+    margin: 0;
+    padding: 0;
+    overflow: hidden !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
-    zoom: 0.82;
-    /* overflow: hidden; */
+  }
+
+  @page {
+    size: A4;
+    margin: 8mm;
+  }
+
+  * {
+    max-width: 100% !important;
+  }
+
+  .no-break {
+    break-inside: avoid;
+    page-break-inside: avoid;
   }
 
   table {
     width: 100% !important;
-    table-layout: fixed;
+    table-layout: fixed !important;
+    border-collapse: collapse;
   }
 
-  th,
-  td {
+  th, td {
+    padding: 4px !important;
     font-size: 10px !important;
-    padding: 1px !important;
+    white-space: normal !important;
     word-break: break-word;
+    overflow: hidden !important;
   }
 
-  /* main > div > div:nth-child(1),
-  main > div > div:nth-child(2) {
-    display: none;
-  } */
+  .overflow-x-auto {
+    overflow: visible !important;
+  }
 
-   ::-webkit-scrollbar {
+  .print\:overflow-x-visible {
+    overflow: visible !important;
+  }
+
+  .print\:block {
+    overflow: visible !important;
+  }
+
+  ::-webkit-scrollbar {
     display: none;
+  }
+
+  .no-wrap {
+    white-space: nowrap !important;
   }
 }

@@ -59,7 +59,8 @@ export function QuotationSection({ settings, lines, onRemove, onClear }: Quotati
       ) : (
         <>
 
-        <div className="mb-4 flex items-center justify-between">
+        {/* <div className="mb-4 flex items-center justify-between"> */}
+        <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-3">
             <Image
               src="/surya_logo.png"
@@ -70,7 +71,7 @@ export function QuotationSection({ settings, lines, onRemove, onClear }: Quotati
             />
 
             <div>
-              <h2 className="text-xl font-bold uppercase">
+              <h2 className="text-base sm:text-xl font-bold uppercase leading-tight">
                 Surya Profile Industries
               </h2>
 
@@ -80,7 +81,7 @@ export function QuotationSection({ settings, lines, onRemove, onClear }: Quotati
             </div>
           </div>
 
-          <div className="text-right text-sm">
+          <div className="text-left sm:text-right text-sm">
             <p><strong>Date:</strong> {new Date().toLocaleDateString('en-GB').replace(/\//g, '-')}</p>
             <p><strong>Quotation:</strong> {settings.quotationNo}</p>
           </div>
@@ -113,9 +114,46 @@ export function QuotationSection({ settings, lines, onRemove, onClear }: Quotati
           </div>
         </div>
 
-          <div className="-mx-2 overflow-x-auto md:-mx-2 print:overflow-visible print:overflow-x-visible">
+
+
+          {/* MOBILE VIEW */}
+          <div className="md:hidden print:hidden space-y-3">
+            {lines.map((line) => {
+              const calc = calculateLine(line, settings)
+
+              return (
+                <div
+                  key={line.id}
+                  className="border rounded-xl p-3 bg-white shadow-sm"
+                >
+                  <div className="font-semibold text-sm mb-1">
+                    {line.item.type}
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div>Thick: {line.item.thick}</div>
+                    <div>Qty: {line.qty} pcs</div>
+
+                    <div>Wt/pc: {line.item.wtpc} kg</div>
+                    <div>Total: {calc.totalKg} kg</div>
+
+                    <div>Rate: ₹{calc.ratePerPc}</div>
+                    <div>Amount: ₹{calc.lineAmount}</div>
+
+                    <div className="col-span-2 text-right font-semibold text-blue-600">
+                      ₹{calc.lineTotal}
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+
+
+
+          <div className="-mx-2 hidden md:block print:block overflow-x-auto md:-mx-2 print:overflow-visible print:overflow-x-hidden">
             {/* <Table> */}
-            <Table className="print:table-fixed w-full">
+            <Table className="w-full table-auto text-[12px] print:table-fixed">
               <TableHeader>
                 <TableRow className="bg-muted/50">
                   <TableHead className="whitespace-nowrap text-[11px] uppercase tracking-wide print:w-[140px]">Item</TableHead>
@@ -123,7 +161,7 @@ export function QuotationSection({ settings, lines, onRemove, onClear }: Quotati
                   <TableHead className="whitespace-nowrap text-[11px] uppercase tracking-wide">Qty (pcs)</TableHead>
                   <TableHead className="whitespace-nowrap text-[11px] uppercase tracking-wide">Wt/pc</TableHead>
                   <TableHead className="whitespace-nowrap text-[11px] uppercase tracking-wide">Total kg</TableHead>
-                  <TableHead className="whitespace-nowrap text-[11px] uppercase tracking-wide">MT Rate</TableHead>
+                  <TableHead className="whitespace-nowrap text-[11px] uppercase tracking-wide w-[70px]">MT Rate</TableHead>
                   <TableHead className="whitespace-nowrap text-[11px] uppercase tracking-wide">Rate/pc</TableHead>
                   <TableHead className="whitespace-nowrap text-[11px] uppercase tracking-wide">Amount</TableHead>
                   <TableHead className="whitespace-nowrap text-[11px] uppercase tracking-wide">GST</TableHead>
@@ -135,10 +173,15 @@ export function QuotationSection({ settings, lines, onRemove, onClear }: Quotati
                 {lines.map((line) => {
                   const calc = calculateLine(line, settings)
                   return (
-                    <TableRow key={line.id} className="group print:h-[28px]">
+                    <TableRow key={line.id} className="group print:h-[28px] no-break">
                       <TableCell className="print:w-[140px] whitespace-normal break-words">
                         <div className="font-medium">
-                          {line.item.type} Pipe — {line.item.size}
+                          {
+                            line.item.category === 'sheet'
+                              ? `${line.item.type} — ${line.item.height || '-'}x${line.item.width || '-'}`
+                              : `${line.item.type} — ${line.item.size}`
+                          }
+                          {/* {line.item.type} — {line.item.size} */}
                         </div>
                         {/* <div className="font-mono text-[11px] text-muted-foreground">
                           diff: +₹{formatNumber(line.item.diff)} · MT: ₹{formatNumber(calc.effectiveMT)}
@@ -148,11 +191,11 @@ export function QuotationSection({ settings, lines, onRemove, onClear }: Quotati
                       <TableCell className="font-mono text-[13px] font-semibold">{line.qty} pcs</TableCell>
                       <TableCell className="font-mono text-[13px]">{line.item.wtpc} kg</TableCell>
                       <TableCell className="font-mono text-[13px] font-medium text-primary">{calc.totalKg} kg</TableCell>
-                      <TableCell className="font-mono text-xs">₹{formatNumber(calc.effectiveMT)}/MT</TableCell>
-                      <TableCell className="font-mono text-[13px]">{formatINR(calc.ratePerPc)}</TableCell>
-                      <TableCell className="font-mono text-[13px]">{formatINR(calc.lineAmount)}</TableCell>
+                      <TableCell className="font-mono text-xs no-wrap">₹{formatNumber(calc.effectiveMT)}/MT</TableCell>
+                      <TableCell className="font-mono text-[13px] no-wrap">{formatINR(calc.ratePerPc)}</TableCell>
+                      <TableCell className="font-mono text-[13px] no-wrap">{formatINR(calc.lineAmount)}</TableCell>
                       <TableCell className="font-mono text-[13px]">{formatINR(calc.gstAmount)}</TableCell>
-                      <TableCell className="font-mono text-[13px] font-medium">{formatINR(calc.lineTotal)}</TableCell>
+                      <TableCell className="font-mono text-[13px] font-medium no-wrap">{formatINR(calc.lineTotal)}</TableCell>
                       <TableCell className="print:hidden">
                         <Button
                           variant="ghost"

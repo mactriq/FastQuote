@@ -23,7 +23,7 @@ export default function QuotationTool() {
       <TopNav />
       <Header />
       {/* <main className="mx-auto max-w-5xl px-4 py-7 md:px-6"> */}
-      <main className="w-full px-4 py-7 md:px-6 lg:px-8">
+      <main className="w-full px-3 py-5 sm:px-4 md:px-6 lg:px-8 print:px-2 print:py-2">
         {/* <div className="flex flex-col gap-5">
           <BaseRateSection settings={settings} onUpdate={updateSettings} />
           <AddItemSection settings={settings} onAdd={addLine} />
@@ -45,10 +45,10 @@ export default function QuotationTool() {
           </div>
 
           {/* Section 2 + 3 Side by Side */}
-          <div className="grid items-stretch gap-5 print:block lg:grid-cols-[37%_62%] items-start">
+            <div className="grid grid-cols-1 gap-5 print:block lg:grid-cols-[37%_62%] print:gap-2">
 
             {/* Left Side */}
-            <div className="print:hidden h-full">
+            <div className="print:hidden w-full">
               <AddItemSection
                 settings={settings}
                 onAdd={addLine}
@@ -56,7 +56,7 @@ export default function QuotationTool() {
             </div>
 
             {/* Right Side */}
-            <div className="print:block min-w-0 overflow-hidden">
+            <div className="print:block w-full min-w-0 overflow-visible">
               <QuotationSection
                 settings={settings}
                 lines={lines}

@@ -53,10 +53,13 @@ export function AddItemSection({
 
   const [items, setItems] = useState([
     {
+      category: '',
       type: '',
       size: '',
       thick: '',
       qty: '',
+      height: '',
+      width: '',
     }
   ])
 
@@ -64,10 +67,13 @@ export function AddItemSection({
     setItems([
       ...items,
       {
+        category: '',
         type: '',
         size: '',
         thick: '',
         qty: '',
+        height: '',
+        width: '',
       }
     ])
   }
@@ -90,6 +96,23 @@ export function AddItemSection({
       [field]: value,
     }
 
+    if (field === 'category') {
+      updated[index].type = ''
+      updated[index].size = ''
+      updated[index].thick = ''
+      updated[index].height = ''
+      updated[index].width = ''
+    }
+
+    if (field === 'type') {
+      updated[index].size = ''
+      updated[index].thick = ''
+    }
+
+    if (field === 'size') {
+      updated[index].thick = ''
+    }
+
     setItems(updated)
   }
 
@@ -97,24 +120,52 @@ export function AddItemSection({
 
     items.forEach((entry) => {
 
-      const foundItem = allItems.find(
-        (i) =>
+      const foundItem = allItems.find((i) => {
+
+        // ✅ RECT-SQUARE PIPE
+        if (entry.type === 'RectSquare') {
+          return (
+            i.type === 'Rect-Square Pipe' &&
+            i.size === entry.size &&
+            i.thick === entry.thick
+          )
+        }
+
+        // ✅ SHEET FIX (MOST IMPORTANT)
+        if (entry.category === 'sheet') {
+          return (
+            i.type.toLowerCase().includes(entry.type.toLowerCase().replace(' sheet', '')) &&
+            i.thick === entry.thick
+          )
+        }
+
+        // ✅ NORMAL CASE
+        return (
           i.type === entry.type &&
           i.size === entry.size &&
           i.thick === entry.thick
-      )
+        )
+      })
 
       if (foundItem && Number(entry.qty) > 0) {
-        onAdd(foundItem, Number(entry.qty))
+        onAdd({
+          ...foundItem,
+          height: Number(entry.height),
+          width: Number(entry.width),
+          category: entry.category
+        } as any, Number(entry.qty))
       }
     })
 
     setItems([
       {
+        category: '',
         type: '',
         size: '',
         thick: '',
         qty: '',
+        height: '',
+        width: '',
       }
     ])
   }
@@ -129,79 +180,76 @@ export function AddItemSection({
     <div className="h-[calc(95vh-100px)] overflow-y-auto pr-2">
       {items.map((entry, index) => {
 
-        const selectedItem = allItems.find(
-          (i) =>
+        const selectedItem = allItems.find((i) => {
+
+          // Rect + Square combine
+          if (entry.type === 'RectSquare') {
+            return (
+              i.type === 'Rect-Square Pipe' &&
+              i.size === entry.size &&
+              i.thick === entry.thick
+            )
+          }
+
+          // SHEET FIX (IMPORTANT)
+          if (entry.category === 'sheet') {
+            return (
+              i.type.toLowerCase().includes(entry.type.toLowerCase()) &&
+              i.thick === entry.thick
+            )
+          }
+
+          // normal case
+          return (
             i.type === entry.type &&
             i.size === entry.size &&
             i.thick === entry.thick
-        )
+          )
+        })
 
-        // const selectedItem = allItems.find((i) => {
-        //   if (entry.type === 'RectSquare') {
-        //     return (
-        //       (i.type === 'Rect' || i.type === 'Square') &&
-        //       i.size === entry.size &&
-        //       i.thick === entry.thick
-        //     )
-        //   }
-
-        //   if (entry.type === 'Round') {
-        //     return (
-        //       i.type === 'Round' &&
-        //       i.size === entry.size &&
-        //       i.thick === entry.thick
-        //     )
-        //   }
-
-        //   if (entry.type === 'SemiCoil') {
-        //     return i.type === 'SemiCoil'
-        //   }
-
-        //   if (entry.type === 'Sheet') {
-        //     return i.type === 'Sheet'
-        //   }
-
-        //   return false
-        // })
 
         const qtyNum = Number(entry.qty) || 0
 
         const sizes = entry.type
           ? [...new Set(
               allItems
-                .filter((i) => i.type === entry.type)
-                // .filter((i) => {
-                //   if (entry.type === 'RectSquare') {
-                //     return i.type === 'Rect' || i.type === 'Square'
-                //   }
+                // .filter((i) => i.type === entry.type)
+                .filter((i) => {
+                  if (entry.type === 'RectSquare') {
+                    return i.type === 'Rect-Square Pipe'
+                  }
 
-                //   if (entry.type === 'Round') {
-                //     return i.type === 'Round'
-                //   }
-
-                //   if (entry.type === 'SemiCoil') {
-                //     return i.type === 'SemiCoil'
-                //   }
-
-                //   if (entry.type === 'Sheet') {
-                //     return i.type === 'Sheet'
-                //   }
-
-                //   return false
-                // })
+                  return i.type === entry.type
+                })
                 .map((i) => i.size)
             )]
           : []
 
         const thicknesses =
-          entry.type && entry.size
+          entry.type
             ? [...new Set(
                 allItems
-                  .filter(
-                    (i) =>
+                  .filter((i) => {
+
+                    // ✅ RECT-SQUARE PIPE
+                    if (entry.type === 'RectSquare') {
+                      return (
+                        i.type === 'Rect-Square Pipe' &&
+                        i.size === entry.size
+                      )
+                    }
+
+                    // ✅ SHEET (NO SIZE REQUIRED)
+                    if (entry.category === 'sheet') {
+                      return i.type === entry.type
+                    }
+
+                    // ✅ NORMAL CASE
+                    return (
                       i.type === entry.type &&
                       i.size === entry.size
-                  )
+                    )
+                  })
                   .map((i) => i.thick)
               )]
             : []
@@ -262,14 +310,38 @@ export function AddItemSection({
 
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
 
+              {/* Category */}
+              <div className="space-y-1.5">
+                <Label className="text-xs uppercase tracking-wider text-muted-foreground">
+                  Category
+                </Label>
+
+                <Select
+                  value={entry.category}
+                  onValueChange={(value) =>
+                    updateItem(index, 'category', value)
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select category" />
+                  </SelectTrigger>
+
+                  <SelectContent>
+                    <SelectItem value="semi-coil">Semi-Coil</SelectItem>
+                    <SelectItem value="sheet">Sheet</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
               {/* Pipe Type */}
               <div className="space-y-1.5">
                 <Label className="text-xs uppercase tracking-wider text-muted-foreground">
-                  Pipe Type
+                  Item Type
                 </Label>
 
                 <Select
                   value={entry.type}
+                  disabled={!entry.category}
                   onValueChange={(value) =>
                     updateItem(index, 'type', value)
                   }
@@ -279,44 +351,79 @@ export function AddItemSection({
                   </SelectTrigger>
 
                   <SelectContent>
-                    {types.map((t) => (
-                      <SelectItem key={t} value={t}>
-                        {t} 
-                        {/* {t === 'Round' && 'Round Pipe'}
-                        {t === 'RectSquare' && 'Rect-Square Pipe'}
-                        {t === 'SemiCoil' && 'Semi-Coil'}
-                        {t === 'Sheet' && 'Sheet'} */}
-                      </SelectItem>
-                    ))}
+                    {/* Semi-Coil */}
+                    {entry.category === 'semi-coil' && (
+                      <>
+                        <SelectItem value="RectSquare">Rect-Square Pipe</SelectItem>
+                        <SelectItem value="Round pipe">Round Pipe</SelectItem>
+                      </>
+                    )}
+                    {/* Sheet */}
+                    {entry.category === 'sheet' && (
+                      <>
+                        <SelectItem value="Metal Sheet">Metal Sheet</SelectItem>
+                        <SelectItem value="GI Sheet">GI Sheet</SelectItem>
+                        <SelectItem value="Color Sheet">Color Sheet</SelectItem>
+                      </>
+                    )}
                   </SelectContent>
                 </Select>
               </div>
 
               {/* Size */}
               <div className="space-y-1.5">
-                <Label className="text-xs uppercase tracking-wider text-muted-foreground">
+                {/* <Label className="text-xs uppercase tracking-wider text-muted-foreground">
                   Size
-                </Label>
+                </Label> */}
 
-                <Select
-                  value={entry.size}
-                  onValueChange={(value) =>
-                    updateItem(index, 'size', value)
-                  }
-                  disabled={!entry.type}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select size" />
-                  </SelectTrigger>
+                {/* SIZE OR SHEET DIMENSIONS */}
+                <div className="space-y-1.5">
+                  <Label className="text-xs uppercase tracking-wider text-muted-foreground">
+                    {entry.category === 'sheet' ? 'Dimensions (ft)' : 'Size'}
+                  </Label>
 
-                  <SelectContent>
-                    {sizes.map((s) => (
-                      <SelectItem key={s} value={s}>
-                        {s}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                  {entry.category === 'sheet' ? (
+                    <div className="grid grid-cols-2 gap-2">
+                      <Input
+                        type="number"
+                        placeholder="Height"
+                        value={entry.height || ''}
+                        onChange={(e) =>
+                          updateItem(index, 'height', e.target.value)
+                        }
+                      />
+
+                      <Input
+                        type="number"
+                        placeholder="Width"
+                        value={entry.width || ''}
+                        onChange={(e) =>
+                          updateItem(index, 'width', e.target.value)
+                        }
+                      />
+                    </div>
+                  ) : (
+                    <Select
+                      value={entry.size}
+                      onValueChange={(value) =>
+                        updateItem(index, 'size', value)
+                      }
+                      disabled={!entry.type}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select size" />
+                      </SelectTrigger>
+
+                      <SelectContent>
+                        {sizes.map((s) => (
+                          <SelectItem key={s} value={s}>
+                            {s}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  )}
+                </div>
               </div>
 
               {/* Thickness */}
@@ -330,7 +437,11 @@ export function AddItemSection({
                   onValueChange={(value) =>
                     updateItem(index, 'thick', value)
                   }
-                  disabled={!entry.size}
+                  disabled={
+                    entry.category === 'sheet'
+                      ? !entry.type
+                      : !entry.size
+                  }
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select thickness" />
@@ -346,11 +457,10 @@ export function AddItemSection({
                 </Select>
               </div>
 
-            </div>
 
             {/* Quantity */}
-            <div className="mt-3 max-w-xs space-y-1.5">
-              <Label className="text-xs uppercase tracking-wider text-muted-foreground">
+            <div className="max-w-xs space-y-1.5">
+              <Label className="text-xs uppercase text-muted-foreground">
                 Quantity (pcs / units)
               </Label>
 
@@ -365,6 +475,9 @@ export function AddItemSection({
                 className="font-mono text-base font-medium"
               />
             </div>
+
+            </div>
+
 
             {/* Price Preview */}
             {selectedItem && (
@@ -419,7 +532,20 @@ function PricePreview({
   const rkg = ratePerKg(item, settings)
   const rpc = ratePerPc(item, settings)
 
-  const totalKg = Number((item.wtpc * qty).toFixed(2))
+  // const totalKg = Number((item.wtpc * qty).toFixed(2))
+    let wtpc = item.wtpc
+
+  // ✅ Sheet calculation
+  if ((item as any).height && (item as any).width) {
+    const h = Number((item as any).height)
+    const w = Number((item as any).width)
+    const t = parseFloat(item.thick)
+
+    wtpc = h * w * t * 0.00012
+  }
+
+  const totalKg = Number((wtpc * qty).toFixed(2))
+
   const lineMat = Number((rpc * qty).toFixed(2))
 
   return (
@@ -450,7 +576,8 @@ function PricePreview({
 
         <PreviewItem
           label="Wt per pc"
-          value={`${item.wtpc} kg`}
+          // value={`${item.wtpc} kg`}
+          value={`${wtpc.toFixed(2)} kg`}
         />
 
       </div>
