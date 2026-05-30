@@ -171,3 +171,20 @@
     white-space: nowrap !important;
   }
 }
+
+.erp-bg {
+  background: linear-gradient(to right, #BBC9FF, #F1F5FF);
+}
+
+.erp-header {
+  background: #C9D1FF;
+}
+
+.erp-section {
+  background: #d7dff0;
+}
+
+.erp-input {
+  background: #FFFFFF;
+  border: 1px solid #b8c2d6;
+}

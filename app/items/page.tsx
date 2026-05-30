@@ -199,7 +199,7 @@ export default function ItemsPage() {
               </SelectContent>
             </Select>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="grid grid-cols-2 sm:flex gap-2 w-full lg:w-auto">
             <Button variant="outline" size="sm" onClick={handleAdd}>
               <Plus className="mr-1.5 h-4 w-4" />
               Add Item
